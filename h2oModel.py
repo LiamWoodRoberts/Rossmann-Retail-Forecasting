@@ -1,8 +1,8 @@
-#A sample pipeline using a H2ORandomForestEstimator in python for a kaggle
-#data set available:https://www.kaggle.com/c/rossmann-store-sales
+#A sample pipeline using a H2ORandomForestEstimator in python for a kaggle data set, available:
+#https://www.kaggle.com/c/rossmann-store-sales
 
 #For a guide on setting up an H2o enviornment in anaconda check out:
-#liamwoodroberts.com/2018/11/01/setting-up-an-h20-environment-with-anaconda-mac/
+#https://liamwoodroberts.com/2018/11/01/setting-up-an-h20-environment-with-anaconda-mac/
 
 #All Packages Used
 import pandas as pd
@@ -38,7 +38,7 @@ test_df = test.merge(store,on='Store')
 test_df.set_index('Id',inplace = True)
 test_df.sort_index(inplace=True)
 
-#Kaggle doesnt count days where store was not open for predictions
+#Kaggle doesnt count days where store was not open in its scoring
 pd_df = pd_df[(pd_df.Sales>0)]
 
 #Initialize h2o cluster and clear any previously saved info from the cluster
@@ -62,10 +62,10 @@ rf = H2ORandomForestEstimator(
     stopping_rounds = 5,
     stopping_tolerance = 1e-4
     )
-rf.train(x=X_labels,y=y_labels,training_frame=train)
 
 #h2o supports .fit() to fit into the sklearn pipeline however recommends using
 #.train() and passing the full dataframe into the model
+rf.train(x=X_labels,y=y_labels,training_frame=train)
 
 #Get predictions and transfrom them back to untransformed state
 predictions = rf.predict(testh2o)
