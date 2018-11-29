@@ -1,3 +1,5 @@
+'''Trains and saves a Random Forest Model to local directory'''
+
 import pandas as pd
 import h2o
 from h2o.estimators.random_forest import H2ORandomForestEstimator
