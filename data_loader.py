@@ -1,6 +1,8 @@
+'''Preprocesses and cleans base kaggle data then saves it to a csv in the local directory'''
+
 import pandas as pd
 
-#Set Root Directory
+#Specify Working Directory
 directory = '/Users/liamroberts/Desktop/Datasets/Rossmann/'
 
 #Import Data
