@@ -32,7 +32,7 @@ test['log_sales'] = test['Sales'].log()
 X_labels = [i for i in train.col_names if (i not in ['Sales','Customers','log_sales'])]
 y_labels = 'log_sales'
 
-#Create Model Using Default RFE
+#Create Model Using Default XGBoost Estimator
 model = H2OXGBoostEstimator(seed =1)
 
 model.train(x=X_labels,
