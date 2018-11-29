@@ -1,3 +1,5 @@
+'''Trains and saves an XGBoost Model to local directory'''
+
 import pandas as pd
 import h2o
 from h2o.estimators.xgboost import H2OXGBoostEstimator
