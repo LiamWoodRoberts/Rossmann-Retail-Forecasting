@@ -1,3 +1,5 @@
+'''Loads trained models and prints performance accuracy on training and validation data'''
+
 import h2o
 
 #Initialize h2o cluster
