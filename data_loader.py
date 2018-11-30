@@ -22,8 +22,36 @@ df['WeekOfYear'] = df.index.weekofyear
 df = pd.merge(df,store,on = 'Store')
 
 #Remove Days Where Sales are Zero
-df = df[df['Sales']>0]
+df = df[(df['Sales']>0)| (df['Open']==0)]
 
+#-----Feature Engineering------#
+
+#Store Specific Metrics
+agg_df = df.groupby(by='Store').mean()
+agg_df['SalesPerCustomer'] = agg_df['Sales']/agg_df['Customers']
+agg_df['MeanStoreSales'] = agg_df['Sales']
+agg_df['MeanStoreCustomers'] = agg_df['Customers']
+agg_df = agg_df[['MeanStoreSales','MeanStoreCustomers','SalesPerCustomer']]
+df = pd.merge(df,agg_df, on = 'Store')
+
+#Promo Sales Ratio
+promo = df[df['Promo']==1].groupby('Store').mean()
+nopromo = df[df['Promo']==0].groupby('Store').mean()
+promo['PromoRatio'] = promo['Sales']/nopromo['Sales']
+promo['A'] = promo['Sales']
+promo = promo[['PromoRatio','A']]
+df = pd.merge(df,promo,on = 'Store')
+
+#Promo Days Ratio
+promo = df[df['Promo']==1].groupby('Store').sum()
+nopromo = df[df['Promo']==0].groupby('Store').sum()
+promo['PromoDaysRatio'] = promo['Open']/nopromo['Open']
+promo['B'] = promo['Sales']
+promo = promo[['PromoDaysRatio','B']]
+df = pd.merge(df,promo,on = 'Store')
+df.drop(columns = ['A','B'],inplace=True)
+
+#------Save Data to Csv------#
 #Train test split ~90% through data
 split_point = int(len(df)*0.9)
 train = df[:split_point]
