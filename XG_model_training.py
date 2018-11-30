@@ -4,15 +4,16 @@ import pandas as pd
 import h2o
 from h2o.estimators.xgboost import H2OXGBoostEstimator
 
-#Set Root Directory
-directory = '/Users/liamroberts/Desktop/Datasets/Rossmann/'
+#Set File Paths
+data_directory = '/Users/LiamRoberts/Desktop/Professional/DataScience/Rossmann Retail Forecasting/'
+save_folder = '/Users/LiamRoberts/rossmann_retail/models'
 
 #Load Data
 train = pd.read_csv('train.csv')
 test = pd.read_csv('test.csv')
 
 #Initialize h2o cluster
-h2o.init(nthreads=-1,max_mem_size='6G')
+h2o.init(nthreads=-1,max_mem_size='6G',enable_assertions=False)
 h2o.remove_all()
 
 #Convert DataFrames to h2o frames
@@ -44,7 +45,7 @@ model.train(x=X_labels,
 
 #Save Model
 model_path = h2o.save_model(model = model,
-               path = f'{directory}/models',
+               path = f'{save_folder}',
                force = True)
 
 print(model_path)
