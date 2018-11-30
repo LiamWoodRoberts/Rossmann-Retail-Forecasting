@@ -54,7 +54,6 @@ nopromo = df[df['Promo'] == 0].groupby('Store').mean()
 promo['PromoRatio'] = promo['Sales']/nopromo['Sales']
 promo['A'] = promo['Sales']
 promo = promo[['PromoRatio',
-
                'A']]
 
 df = pd.merge(df,
